@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PlaylistUpdater
 {
@@ -23,6 +14,29 @@ namespace PlaylistUpdater
         public MainWindow()
         {
             InitializeComponent();
+
+
+            //PlaylistConfiguration config = new PlaylistConfiguration(@"..\..\resources\playlist_update_data.csv");
+
+            //PlaylistUpdateDataGrid.DataContext = config.Data;
+
+            //ScriptController.RunCommand(ScriptController.PowershellJob, ScriptController.LoadScriptFromFile(@"..\..\resources\playlistUpdaterCore.ps1"));
+
+            CoreConfiguration ccfg = new CoreConfiguration(@"..\..\resources\settings.json");
+          
+
+        }
+
+
+
+        private void DataGridCell_LocationCell_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            GridController.HandleCellClick(sender, GridController.CellType.PATH);
+        }
+
+        private void DataGridCell_LocationButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            GridController.HandleCellClick(sender, GridController.CellType.PATH);
         }
     }
 }

@@ -1,0 +1,13 @@
+ {
+  "binaries": {
+    "ffmpeg": "F:\\Music\\ytdl\\ffmpeg.exe",
+    "youtube_dl": "F:\\Music\\ytdl\\youtube-dl.exe"
+  },
+  "configs": {
+    "playlist_data": ".\\playlist_update_data.csv"
+  },
+  "destinations": {
+    "archives": ".\\archives\\",
+    "m3u": "F:\\Music\\Dopamine\\Playlists\\"
+  }
+ }
