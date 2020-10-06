@@ -18,7 +18,7 @@
 
     
     
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" MaxHeight="50" />
             <RowDefinition Height="9*" />
@@ -27,10 +27,10 @@
         <DataGrid Name="PlaylistUpdateDataGrid" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10,10" VerticalAlignment="Stretch" 
                   ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Url"  Binding="{Binding URL}" />
-                <DataGridTextColumn Width="Auto" Header="Last Updated" Binding="{Binding LAST_UPDATED}"/>
-                <DataGridTextColumn Width="Auto" Header="Channel"  Binding="{Binding CHANNEL}"/>
-                <DataGridTextColumn Width="Auto" Header="Genre"  Binding="{Binding GENRE}"/>
+                <DataGridTextColumn Width="*" Header="Url"  Binding="{Binding Url}" />
+                <DataGridTextColumn Width="Auto" Header="Last Updated" Binding="{Binding LastUpdated}"/>
+                <DataGridTextColumn Width="Auto" Header="Channel"  Binding="{Binding Channel}"/>
+                <DataGridTextColumn Width="Auto" Header="Genre"  Binding="{Binding Genre}"/>
                 <DataGridTemplateColumn Width="*" Header="Location">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -46,7 +46,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridCheckBoxColumn Width="Auto" Header="Sorted"  Binding="{Binding SORTED}"/>
+                <DataGridCheckBoxColumn Width="Auto" Header="Sorted"  Binding="{Binding Sorted}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -70,7 +70,7 @@
 
 
 
-    </Grid>
+    </Grid>-->
 </Window>
 
 <!--

@@ -20,11 +20,13 @@ namespace PlaylistUpdater
 
             //PlaylistUpdateDataGrid.DataContext = config.Data;
 
-            //ScriptController.RunCommand(ScriptController.PowershellJob, ScriptController.LoadScriptFromFile(@"..\..\resources\playlistUpdaterCore.ps1"));
+            ScriptController.RunCommand(ScriptController.PowershellJob, ScriptController.LoadScriptFromFile(@"..\..\resources\playlistUpdaterCore.ps1"));
 
-            CoreConfiguration ccfg = new CoreConfiguration(@"..\..\resources\settings.json");
-          
+            SettingsManager settingsManager = new SettingsManager(@"..\..\resources\settings.json");
 
+            Console.WriteLine("The CoreConfiguration is " + ((settingsManager.CoreConfiguration.IsValid) ? "Valid!" : "Invalid!"));
+
+            //PlaylistUpdateDataGrid.DataContext = settingsManager.PlaylistConfiguration.Data;
         }
 
 

@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="ExecutableFinder.cs" />
     <Compile Include="ExternalConfig.cs" />
+    <Compile Include="PlaylistUpdaterSorted.cs" />
     <Compile Include="ScriptController.cs" />
     <Compile Include="CoreConfiguration.cs" />
     <Compile Include="SettingsManager.cs" />
