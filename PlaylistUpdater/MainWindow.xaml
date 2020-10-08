@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlaylistUpdater"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Playlist Updater"
+        Height="480"
+        Width="800"
+        ResizeMode="CanResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="20"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Background Color -->
+        <Grid Grid.RowSpan="2" Background="#373a40"></Grid>
+
+        <!-- Navigation Panel -->
+        <Grid x:Name="nav_pnl"
+              Grid.RowSpan="2"
+              HorizontalAlignment="Left"
+              Width="70"
+              Background="#19d3da">
+            <Grid.Effect>
+                <DropShadowEffect Color="#FF686D76"/>
+            </Grid.Effect>
+
+        </Grid>
+
+        <!-- Title Bar -->
+        <StackPanel Grid.Row="0" 
+                        Height="20" 
+                        WindowChrome.IsHitTestVisibleInChrome="True" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+            <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="MinimizeBtn" Click="MinimizeBtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="minimize.png"/>
+                </Button.Background>
+            </Button>
+            <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="ResizeBtn" Click="ResizeBtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="shrink.png"/>
+                </Button.Background>
+            </Button>
+            <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="CloseBtn" Click="CloseBtn_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="close.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>
