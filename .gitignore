@@ -8,7 +8,7 @@
 *.json
 *.ps1
 *.csv
-resources/*
+PlaylistUpdater/resources/*
 
 # User-specific files
 *.rsuser

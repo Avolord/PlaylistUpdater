@@ -120,7 +120,6 @@
     <None Include="resources\playlist_update_data.csv" />
     <None Include="resources\settings.json" />
     <None Include="resources\settings2.json" />
-    <None Include="test.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
