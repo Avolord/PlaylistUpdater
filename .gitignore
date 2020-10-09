@@ -5,10 +5,9 @@
 
 # Private files
 *.json
-*.json
 *.ps1
 *.csv
-PlaylistUpdater/resources/*
+**/resources/*
 
 # User-specific files
 *.rsuser
