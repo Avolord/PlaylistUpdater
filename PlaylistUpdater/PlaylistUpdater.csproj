@@ -90,6 +90,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\playlistUpdater2.ps1" />
+    <None Include="Resources\playlistUpdaterCore.ps1" />
+    <None Include="Resources\playlist_update_data.csv" />
+    <None Include="Resources\settings.json" />
+    <None Include="Resources\settings2.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -103,6 +108,11 @@
     <Resource Include="Resources\close.png" />
     <Resource Include="Resources\minimize.png" />
     <Resource Include="Resources\shrink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\close-hover.png" />
+    <Resource Include="Resources\minimize-hover.png" />
+    <Resource Include="Resources\shrink-hover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
