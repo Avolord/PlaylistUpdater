@@ -100,21 +100,9 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="download.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="minimize.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\close.png" />
     <Resource Include="Resources\minimize.png" />
     <Resource Include="Resources\shrink.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="shrink.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

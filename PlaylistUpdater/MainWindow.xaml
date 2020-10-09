@@ -50,17 +50,17 @@
                         Orientation="Horizontal">
             <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="MinimizeBtn" Click="MinimizeBtn_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="minimize.png"/>
+                    <ImageBrush ImageSource="Resources/minimize.png"/>
                 </Button.Background>
             </Button>
             <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="ResizeBtn" Click="ResizeBtn_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="shrink.png"/>
+                    <ImageBrush ImageSource="Resources/shrink.png"/>
                 </Button.Background>
             </Button>
             <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="CloseBtn" Click="CloseBtn_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="close.png"/>
+                    <ImageBrush ImageSource="Resources/close.png"/>
                 </Button.Background>
             </Button>
         </StackPanel>
