@@ -1,4 +1,4 @@
- {
+{
   "binaries": {
     "ffmpeg": "F:\\Music\\ytdl\\ffmpeg.exe",
     "youtube_dl": "F:\\Music\\ytdl\\youtube-dl.exe"
@@ -10,4 +10,4 @@
     "archives": ".\\archives\\",
     "m3u": "F:\\Music\\Dopamine\\Playlists\\"
   }
- }
+}

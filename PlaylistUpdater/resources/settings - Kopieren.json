@@ -1,9 +1,0 @@
- {
-     "Locations": {
-        "ffmpeg":"F:/Music/ytdl/ffmpeg.exe",
-        "youtube_dl":"F:/Music/ytdl/youtube-dl.exe",
-        "playlist_data":"./playlist_update_data.csv",
-        "archives":"./archives/",
-        "m3u":"F:/Music/Dopamine/Playlists/"
-     }
- }

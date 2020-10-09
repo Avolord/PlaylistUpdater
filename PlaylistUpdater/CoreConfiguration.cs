@@ -1,24 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 
 namespace PlaylistUpdater
 {
-    class CoreConfigurationData
+    class CoreConfigurationDataf
     {
         public Dictionary<string, string> Binaries { get; set; } = new Dictionary<string, string>();
         public Dictionary<string, string> Configs { get; set; } = new Dictionary<string, string>();
         public Dictionary<string, string> Destinations { get; set; } = new Dictionary<string, string>();
     }
 
-    class CoreConfiguration : ExternalConfig<CoreConfigurationData>
+    class CoreConfiguration : ExternalConfig<Core.ConfigurationData>
     {
         public bool IsValid { get; private set; }
 
         public CoreConfiguration(string path)
         {
-            Data = new CoreConfigurationData();
+            Data = new Core.ConfigurationData();
             Load(path);
         }
 
@@ -28,12 +29,11 @@ namespace PlaylistUpdater
             {
                 var serializeOptions = new JsonSerializerOptions
                 {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    WriteIndented = true
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 };
 
                 string jsonString = File.ReadAllText(path);
-                Data = JsonSerializer.Deserialize<CoreConfigurationData>(jsonString, serializeOptions);
+                Data = JsonSerializer.Deserialize<Core.ConfigurationData>(jsonString, serializeOptions);
                 Validate();
             }
             else
@@ -44,55 +44,58 @@ namespace PlaylistUpdater
 
         protected override void Generate(string destination)
         {
-            Data = new CoreConfigurationData();
-
-            Data.Binaries.Add("ffmpeg", @"ffmpeg.exe");
-            Data.Binaries.Add("youtube_dl", @"youtube_dl.exe");
-            Data.Configs.Add("playlist_data", "playlist_update_data.csv");
-            Data.Destinations.Add("archives", @".\archives");
-            Data.Destinations.Add("m3u", @".\m3u");
-
+            Data = new Core.ConfigurationData();
             Validate();
 
-            File.WriteAllText("settings.json", JsonSerializer.Serialize<CoreConfigurationData>(Data));
+            var serializeOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            File.WriteAllText("settings.json", JsonSerializer.Serialize<Core.ConfigurationData>(Data, serializeOptions));
+        }
+
+        public void Generate_Test()
+        {
+            Core.MandatoryData mandatory = new Core.MandatoryData("ffmpeg.exe", "youtube_dl.exe");
+            Core.NonMandatoryData nonMandatory = new Core.NonMandatoryData("playlist_update_data.csv", "archives", "m3u");
+            Core.ConfigurationData d = new Core.ConfigurationData(mandatory, nonMandatory);
+
+            var serializeOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            Console.WriteLine(JsonSerializer.Serialize<Core.ConfigurationData>(d, serializeOptions));
+        }
+
+        private string ValidateBinary(string binary, string binaryPath)
+        {
+            //check if the file is valid
+            if (!File.Exists(binaryPath))
+            {
+                //check if the file can be found in the environment variables
+                string executablePath = ExecutableFinder.Find(binary);
+                if (executablePath != null)
+                {
+                    return executablePath;
+                }
+                else
+                {
+                    IsValid = false;
+                    return "";
+                }
+            }
+            return binaryPath;
         }
 
         private bool Validate()
         {
             IsValid = true;
+
             //Validate the binaries
-            for (int i = 0; i < Data.Binaries.Count; i++)
-            {
-                KeyValuePair<string, string> entry = Data.Binaries.ElementAt(i);
-                if (!File.Exists(entry.Value))
-                {
-                    string executablePath = ExecutableFinder.Find(entry.Key + ".exe");
-                    if (executablePath != null)
-                    {
-                        Data.Binaries[entry.Key] = executablePath;
-                    } else
-                    {
-                        Data.Binaries[entry.Key] = "";
-                        IsValid = false;
-                    }
-                }
-            }
-
-            //validate the configs
-            if(!Data.Configs.ContainsKey("playlist_data"))
-            {
-                Data.Configs.Add("playlist_data", "playlist_update_data.csv");
-            }
-
-            //validate the destinations
-            if(!Data.Destinations.ContainsKey("archives"))
-            {
-                Data.Destinations.Add("archives", @".\archives");
-            }
-            if (!Data.Destinations.ContainsKey("m3u"))
-            {
-                Data.Destinations.Add("m3u", @".\m3u");
-            }
+            Data.Binaries.FFmpeg = ValidateBinary("ffmpeg.exe", Data.Binaries.FFmpeg);
+            Data.Binaries.YoutubeDl = ValidateBinary("youtube_dl.exe", Data.Binaries.YoutubeDl);
 
             return IsValid;
         }

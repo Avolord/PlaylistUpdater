@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,18 +18,17 @@ namespace PlaylistUpdater
         {
             InitializeComponent();
 
+            Updater updater = new Updater(@"..\..\resources\settings2.json");
+            //updater.StartAsync();
+            updater.StartParallelAsync();
 
-            //PlaylistConfiguration config = new PlaylistConfiguration(@"..\..\resources\playlist_update_data.csv");
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Task.Run(() => Console.WriteLine(CommandHandler.Execute("CMD.exe", @"/c F:\Music\ytdl\youtube-dl.exe -U")));
+            //}
+            //var outp = updater.GetPlaylistItemData("PLSrMfDSgltgfvmLgVH1TE9vCq6rRmugOi", "1-2");
 
-            //PlaylistUpdateDataGrid.DataContext = config.Data;
-
-            ScriptController.RunCommand(ScriptController.PowershellJob, ScriptController.LoadScriptFromFile(@"..\..\resources\playlistUpdaterCore.ps1"));
-
-            SettingsManager settingsManager = new SettingsManager(@"..\..\resources\settings.json");
-
-            Console.WriteLine("The CoreConfiguration is " + ((settingsManager.CoreConfiguration.IsValid) ? "Valid!" : "Invalid!"));
-
-            //PlaylistUpdateDataGrid.DataContext = settingsManager.PlaylistConfiguration.Data;
+            Console.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
         }
 
 
