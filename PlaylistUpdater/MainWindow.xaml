@@ -11,13 +11,20 @@
         ResizeMode="CanResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Topmost="True">
+        Topmost="True" Background="Gray">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="20"/>
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
+        <SolidColorBrush x:Key="accent_color" x:Name="AccentColor" Color="#19d3da"/>
+        <SolidColorBrush x:Key="base_color_dark" x:Name="BaseColorDark" Color="#373a40"/>
+        <SolidColorBrush x:Key="base_color_light" x:Name="BaseColorLight" Color="#686d76"/>
+        <SolidColorBrush x:Key="highlight_color" x:Name="HightlightColor" Color="#eeeeee"/>
+        
+        <!-- ToggleButton Style Template -->
+        <ImageBrush x:Key="tb_mouse_over"></ImageBrush>
     </Window.Resources>
 
     <Grid>
@@ -25,29 +32,113 @@
             <RowDefinition Height="35"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <!-- Background Color -->
-        <Grid Grid.RowSpan="2" Background="#373a40"></Grid>
+        <!--<Grid Grid.RowSpan="2" Grid.ColumnSpan="2" Background="{StaticResource base_color_dark}">
+        </Grid>-->
+
+        <ContentControl x:Name="ContentMain" Grid.Column="1" Grid.RowSpan="2" Content="{Binding Path=ActiveContent}"></ContentControl>
 
         <!-- Navigation Panel -->
         <Grid x:Name="nav_pnl"
               Grid.RowSpan="2"
+              Grid.ColumnSpan="2"
               HorizontalAlignment="Left"
               Width="70"
-              Background="#19d3da">
+              Background="{StaticResource accent_color}">
             <Grid.Effect>
                 <DropShadowEffect Color="#FF686D76"/>
             </Grid.Effect>
 
+            <StackPanel x:Name="st_pnl">
+                <!-- Grid for the toggle button -->
+                <Grid Height="90">
+                    <ToggleButton x:Name="Tg_Btn"
+                                  Grid.Column="0"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Width="35"
+                                  Height="40"
+                                  BorderThickness="0">
+
+                        <ToggleButton.Background>
+                            <ImageBrush ImageSource="Resources/menu_toggle.png" Stretch="Uniform"/>
+                        </ToggleButton.Background>
+
+                        <ToggleButton.Triggers>
+                            <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            
+                                            Storyboard.TargetName="nav_pnl"
+                                            Storyboard.TargetProperty="Width"
+                                            BeginTime="0:0:0"
+                                            From="200" To="70"
+                                            Duration="0:0:0.2">
+                                            
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                <BeginStoryboard>
+                                    <Storyboard x:Name="ShowStackPanel">
+                                        <DoubleAnimation
+                                            
+                                            Storyboard.TargetName="nav_pnl"
+                                            Storyboard.TargetProperty="Width"
+                                            BeginTime="0:0:0"
+                                            From="70" To="200"
+                                            Duration="0:0:0.3">
+                                            
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ToggleButton.Triggers>
+                        
+                    </ToggleButton>
+                </Grid>
+
+                <ListView x:Name="ListView_MenuButtons"
+                          Background="Transparent"
+                          BorderBrush="Transparent"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <ListViewItem HorizontalAlignment="Center">
+                        <Button Click="HomeButton_Click">Home</Button>
+                    </ListViewItem>
+                    <ListViewItem HorizontalAlignment="Center">
+                        <Button Click="SettingsButton_Click">Settings</Button>
+                    </ListViewItem>
+                    <ListViewItem HorizontalAlignment="Center">
+                        <Button Click="PlaylistsButton_Click">Playlists</Button>
+                    </ListViewItem>
+                    <ListViewItem HorizontalAlignment="Center">
+                        <Button Click="AboutButton_Click">About</Button>
+                    </ListViewItem>
+                    
+                </ListView>
+                
+            </StackPanel>
+            
         </Grid>
 
         <!-- Title Bar -->
-        <StackPanel Grid.Row="0" 
-                        Height="20" 
-                        WindowChrome.IsHitTestVisibleInChrome="True" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Height="20" 
+                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            
             <Button Width="15" Height="15" Margin="10,0" BorderThickness="0" Name="MinimizeBtn" Click="MinimizeBtn_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="Resources/minimize.png"/>
