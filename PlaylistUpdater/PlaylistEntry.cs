@@ -3,7 +3,7 @@ using System;
 
 namespace PlaylistUpdater
 {
-    class PlaylistUpdateData
+    class PlaylistEntry
     {
         public string Url { get; set; }
         public DateTime LastUpdated { get; set; } 

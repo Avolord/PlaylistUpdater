@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PlaylistConfiguration.cs" />
-    <Compile Include="PlaylistUpdateData.cs" />
+    <Compile Include="PlaylistEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

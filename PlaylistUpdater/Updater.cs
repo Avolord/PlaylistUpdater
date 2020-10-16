@@ -10,6 +10,8 @@ namespace PlaylistUpdater
 {
     class Updater
     {
+        public static Updater Instance { get; set; }
+
         public PlaylistConfiguration PlaylistConfiguration { get; private set; }
         public CoreConfiguration CoreConfiguration { get; private set; }
 
@@ -50,9 +52,7 @@ namespace PlaylistUpdater
 
             if (CoreConfiguration.IsValid)
             {
-                //TODO: Parallelize the foreach loop with tasks.
-                //      DownloadConfigObject would have to be stateless then.
-                foreach (PlaylistUpdateData data in PlaylistConfiguration.Data)
+                foreach (PlaylistEntry data in PlaylistConfiguration.Data)
                 {
                     if (data.Sorted)
                     {
@@ -66,40 +66,6 @@ namespace PlaylistUpdater
                     data.LastUpdated = DateTime.Now;
                 }
             }
-        }
-
-        public async Task StartAsync()
-        {
-            if (!CoreConfiguration.IsValid)
-            {
-                return;
-            }
-
-            if (!Directory.Exists(CoreConfiguration.Data.Configs.Archives))
-            {
-                Directory.CreateDirectory(CoreConfiguration.Data.Configs.Archives);
-            }
-
-            //TODO: Parallelize the foreach loop with tasks.
-            //      DownloadConfigObject would have to be stateless then.
-            foreach (PlaylistUpdateData data in PlaylistConfiguration.Data)
-            {
-                //Console.WriteLine("Queueing {0}'s Playlist...", data.Channel);
-                string output;
-                if (data.Sorted)
-                {
-                    output = await Task<string>.Run(() => UpdatePlaylist_Sorted(data));
-                }
-                else
-                {
-                    output = await Task<string>.Run(() => UpdatePlaylist_Unsorted(data));
-                }
-
-                data.LastUpdated = DateTime.Now;
-                Console.WriteLine("Output: {0}", output);
-            }
-
-            Console.WriteLine("Done!");
         }
 
         public async Task StartParallelAsync()
@@ -116,11 +82,8 @@ namespace PlaylistUpdater
 
             List<Task<string>> tasks = new List<Task<string>>();
 
-            //TODO: Parallelize the foreach loop with tasks.
-            //      DownloadConfigObject would have to be stateless then.
-            foreach (PlaylistUpdateData data in PlaylistConfiguration.Data)
+            foreach (PlaylistEntry data in PlaylistConfiguration.Data)
             {
-                //Console.WriteLine("Queueing {0}'s Playlist...", data.Channel);
                 if (data.Sorted)
                 {
                     tasks.Add(Task<string>.Run(() => UpdatePlaylist_Sorted(data)));
@@ -141,7 +104,7 @@ namespace PlaylistUpdater
             Console.WriteLine("Done!");
         }
 
-        public string UpdatePlaylist_Unsorted(PlaylistUpdateData playlistUpdateData)
+        public string UpdatePlaylist_Unsorted(PlaylistEntry playlistUpdateData)
         {
             DownloadConfiguration dlConf = new DownloadConfiguration(CoreConfiguration.Data.Binaries.FFmpeg);
 
@@ -166,7 +129,7 @@ namespace PlaylistUpdater
             return output;
         }
 
-        public string UpdatePlaylist_Sorted(PlaylistUpdateData playlistUpdateData)
+        public string UpdatePlaylist_Sorted(PlaylistEntry playlistUpdateData)
         {
             return "";
         }

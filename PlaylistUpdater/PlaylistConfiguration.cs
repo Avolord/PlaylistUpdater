@@ -10,11 +10,11 @@ using System.Windows.Data;
 
 namespace PlaylistUpdater
 {
-    class PlaylistConfiguration : ExternalConfig<List<PlaylistUpdateData>>
+    class PlaylistConfiguration : ExternalConfig<List<PlaylistEntry>>
     {
         public PlaylistConfiguration(string path)
         {
-            Data = new List<PlaylistUpdateData>();
+            Data = new List<PlaylistEntry>();
             Load(path);
         }
 
@@ -30,7 +30,7 @@ namespace PlaylistUpdater
                 DataTable dt = CsvImport.NewDataTable(path, ",", true);
                 foreach(DataRow row in dt.Rows)
                 {
-                    PlaylistUpdateData updateData = new PlaylistUpdateData()
+                    PlaylistEntry updateData = new PlaylistEntry()
                     {
                         Channel     = row.Field<string>("CHANNEL"),
                         Genre       = row.Field<string>("GENRE"),

@@ -18,9 +18,9 @@ namespace PlaylistUpdater
         {
             InitializeComponent();
 
-            Updater updater = new Updater(@"..\..\resources\settings2.json");
+            Updater.Instance = new Updater(@"..\..\resources\settings2.json");
             //updater.StartAsync();
-            updater.StartParallelAsync();
+            
 
             //for (int i = 0; i < 10; i++)
             //{
@@ -28,7 +28,7 @@ namespace PlaylistUpdater
             //}
             //var outp = updater.GetPlaylistItemData("PLSrMfDSgltgfvmLgVH1TE9vCq6rRmugOi", "1-2");
 
-            Console.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
+            //Console.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
         }
 
 
@@ -41,6 +41,11 @@ namespace PlaylistUpdater
         private void DataGridCell_LocationButton_Clicked(object sender, RoutedEventArgs e)
         {
             GridController.HandleCellClick(sender, GridController.CellType.PATH);
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            await Updater.Instance.StartParallelAsync();
         }
     }
 }

@@ -9,7 +9,8 @@
         Title="MainWindow" Height="450" Width="800"
         Background="{DynamicResource MaterialDesignBodyLight}"
         >
-    
+    <Button Content="Button" HorizontalAlignment="Left" Margin="329,105,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
 </Window>
 
 <!--
