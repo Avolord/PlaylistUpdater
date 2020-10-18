@@ -10,6 +10,7 @@ namespace PlaylistUpdater
     {
         public T Data { get; set; }
         public abstract void Load(string path);
+        public abstract void Save(string path);
         protected abstract void Generate(string destination);
     }
 }

@@ -6,12 +6,15 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Windows.Data;
 
 namespace PlaylistUpdater
 {
     class PlaylistConfiguration : ExternalConfig<List<PlaylistEntry>>
     {
+        private string FilePath;
+
         public PlaylistConfiguration(string path)
         {
             Data = new List<PlaylistEntry>();
@@ -20,70 +23,49 @@ namespace PlaylistUpdater
 
         public override void Load(string path)
         {
+
             if (File.Exists(path))
             {
-                //Data = CsvImport.NewDataTable(path, ",", true);
-
-                //ChangeColumnTypes(Data, Data.Columns[1].ColumnName, typeof(DateTime));
-                //ChangeColumnTypes(Data, Data.Columns[5].ColumnName, typeof(bool));
-
-                DataTable dt = CsvImport.NewDataTable(path, ",", true);
-                foreach(DataRow row in dt.Rows)
+                var serializeOptions = new JsonSerializerOptions
                 {
-                    PlaylistEntry updateData = new PlaylistEntry()
-                    {
-                        Channel     = row.Field<string>("CHANNEL"),
-                        Genre       = row.Field<string>("GENRE"),
-                        Location    = row.Field<string>("LOCATION"),
-                        Url         = row.Field<string>("URL"),
-                        LastUpdated = ToDateTime(row.Field<string>("LAST_UPDATED")),
-                        Sorted      = ToBoolean(row.Field<string>("SORTED"))
-                    };
-                    Data.Add(updateData);
-                }
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                };
+
+                string jsonString = File.ReadAllText(path);
+
+                Data = JsonSerializer.Deserialize<List<PlaylistEntry>>(jsonString, serializeOptions);
+                FilePath = path;
             }
             else
             {
-                Generate(Constants.DefaultPathPrefix + "playlist_update_data.csv");
+                Generate(Constants.DefaultPathPrefix + "playlists.json");
             }
+        }
+
+        public override void Save(string path)
+        {
+            var serializeOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            File.WriteAllText(path, JsonSerializer.Serialize<List<PlaylistEntry>>(Data, serializeOptions));
         }
 
         protected override void Generate(string destination)
         {
-            //generate an empty config file (just the headers)
+            FilePath = destination;
+            Data = new List<PlaylistEntry>();
+
+            Save(FilePath);
         }
 
-        private void ChangeColumnTypes(System.Data.DataTable dt, string columnName, Type type)
+        public void AddEntry(PlaylistEntry entry, bool saveChanges = false)
         {
-            int ordinal = dt.Columns[columnName].Ordinal;
-
-            dt.Columns.Add(columnName + "_new", type);
-            foreach (System.Data.DataRow dr in dt.Rows)
-            {   // Will need switch Case for others if Date is not the only one.
-                if(type == typeof(DateTime))
-                {
-                    dr[columnName + "_new"] = ToDateTime(dr[columnName].ToString());
-                } 
-                else if(type == typeof(bool))
-                {
-                    dr[columnName + "_new"] = ToBoolean(dr[columnName].ToString());
-                }  
+            Data.Add(entry);
+            if(saveChanges)
+            {
+                Save(FilePath);
             }
-            dt.Columns.Remove(columnName);
-            dt.Columns[columnName + "_new"].ColumnName = columnName;
-
-            dt.Columns[columnName].SetOrdinal(ordinal);
         }
-
-        private DateTime ToDateTime(string entry)
-        {
-            return DateTime.ParseExact(entry, "yyyyMMdd", new System.Globalization.CultureInfo("de-DE"));
-        }
-
-        private bool ToBoolean(string entry)
-        {
-            return entry == "Yes";
-        }
-
     }
 }

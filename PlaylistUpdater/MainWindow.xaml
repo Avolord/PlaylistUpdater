@@ -7,19 +7,8 @@
         xmlns:local="clr-namespace:PlaylistUpdater"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Background="{DynamicResource MaterialDesignBodyLight}"
         >
     <Button Content="Button" HorizontalAlignment="Left" Margin="329,105,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
 </Window>
-
-<!--
-    <DataGridTextColumn Width="*" Header="Location"  Binding="{Binding LOCATION}">
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="DataGridCell_LocationCell_Clicked"/>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                </DataGridTextColumn>
--->
    

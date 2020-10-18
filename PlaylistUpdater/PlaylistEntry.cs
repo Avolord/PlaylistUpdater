@@ -1,16 +1,23 @@
 ﻿
 using System;
+using System.Text.Json.Serialization;
 
 namespace PlaylistUpdater
 {
     class PlaylistEntry
     {
+        [JsonPropertyName("url")]
         public string Url { get; set; }
-        public DateTime LastUpdated { get; set; } 
+        [JsonPropertyName("last_updated")]
+        public DateTime LastUpdated { get; set; }
+        [JsonPropertyName("channel")]
         public string Channel { get; set; }
-        public string Genre { get; set; }
+        [JsonPropertyName("genres")]
+        public string[] Genres { get; set; }
+        [JsonPropertyName("location")]
         public string Location { get; set; }
-        public bool Sorted { get; set; }
+        [JsonPropertyName("sorted")]
+        public bool Sorted { get; set; } = false;
 
     }
 }

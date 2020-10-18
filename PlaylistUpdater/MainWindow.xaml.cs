@@ -17,30 +17,7 @@ namespace PlaylistUpdater
         public MainWindow()
         {
             InitializeComponent();
-
             Updater.Instance = new Updater(@"..\..\resources\settings2.json");
-            //updater.StartAsync();
-            
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Task.Run(() => Console.WriteLine(CommandHandler.Execute("CMD.exe", @"/c F:\Music\ytdl\youtube-dl.exe -U")));
-            //}
-            //var outp = updater.GetPlaylistItemData("PLSrMfDSgltgfvmLgVH1TE9vCq6rRmugOi", "1-2");
-
-            //Console.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
-        }
-
-
-
-        private void DataGridCell_LocationCell_Clicked(object sender, MouseButtonEventArgs e)
-        {
-            GridController.HandleCellClick(sender, GridController.CellType.PATH);
-        }
-
-        private void DataGridCell_LocationButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            GridController.HandleCellClick(sender, GridController.CellType.PATH);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

@@ -115,6 +115,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="resources\playlists.json" />
     <None Include="resources\playlistUpdater2.ps1" />
     <None Include="resources\playlistUpdaterCore.ps1" />
     <None Include="resources\playlist_update_data.csv" />

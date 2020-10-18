@@ -6,13 +6,6 @@ using System.Text.Json;
 
 namespace PlaylistUpdater
 {
-    class CoreConfigurationDataf
-    {
-        public Dictionary<string, string> Binaries { get; set; } = new Dictionary<string, string>();
-        public Dictionary<string, string> Configs { get; set; } = new Dictionary<string, string>();
-        public Dictionary<string, string> Destinations { get; set; } = new Dictionary<string, string>();
-    }
-
     class CoreConfiguration : ExternalConfig<Core.ConfigurationData>
     {
         public bool IsValid { get; private set; }
@@ -42,17 +35,22 @@ namespace PlaylistUpdater
             }
         }
 
-        protected override void Generate(string destination)
+        public override void Save(string path)
         {
-            Data = new Core.ConfigurationData();
-            Validate();
-
             var serializeOptions = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
 
-            File.WriteAllText("settings.json", JsonSerializer.Serialize<Core.ConfigurationData>(Data, serializeOptions));
+            File.WriteAllText(path, JsonSerializer.Serialize<Core.ConfigurationData>(Data, serializeOptions));
+        }
+
+        protected override void Generate(string destination)
+        {
+            Data = new Core.ConfigurationData();
+            Validate();
+
+            Save(destination);
         }
 
         public void Generate_Test()
